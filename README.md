@@ -1,48 +1,28 @@
-# Motion studio showcase
+# Mocap Well-being Showcase
 
-Windows desktop app for local C3D recordings. It shows 3D marker playback,
-gait speed, trunk lean, movement measurements, gait-expression scores, and
-protective-movement scores. Predictions use published weights and run locally.
-Scores animate smoothly; exports retain the original model outputs.
+Windows desktop demo: C3D playback, gait speed, trunk lean, and pretrained
+emotion/protective-movement scores. Runs locally with a 3-15 second rolling window.
 
-## Install from the ZIP (Windows 10/11, 64-bit)
+## Setup and run
 
-1. Install **64-bit Python 3.13** from https://www.python.org/downloads/windows/.
-   Include **pip**, **Tcl/Tk**, and the **Python launcher** in the installer.
-2. Right-click `Pose_stress.zip` and choose **Extract All**. Do not run inside the ZIP.
-   Use a writable folder such as `Documents\Pose_stress`.
-3. Open the extracted folder and double-click **setup_demo.bat**.
-   Internet is required to install dependencies. Wait for `Setup complete`.
-   This creates a local `.venv`; no compiler, GPU, or separate build step is needed.
-4. Double-click **launch_demo.bat**. If no C3D is in the app folder, a file picker opens.
+1. Install [Python 3.13, 64-bit](https://www.python.org/downloads/windows/) with pip, Tcl/Tk and the Python launcher.
+2. Clone this repo or download and **extract** the ZIP.
+3. Run `setup_demo.bat` once. Internet is required for dependencies and missing model weights.
+4. Run `launch_demo.bat`, then choose your C3D. Playback works offline after setup.
 
-The shareable ZIP includes both model checkpoints. If you received source without
-weights, setup downloads them automatically (the gait archive is about 181 MiB).
-After setup, normal playback works offline. No recording is uploaded.
-If setup was interrupted, run `setup_demo.bat` again.
-
-## Open your C3D
-
-- Use **Open C3D...** inside the app.
-- Or drag a C3D onto `launch_demo.bat` in Windows Explorer.
-- Or use PowerShell from the extracted folder (quote paths containing spaces):
+You can also drag a C3D onto the launcher or run:
 
 ```powershell
 .\launch_demo.bat "C:\Recordings\My recording.c3d"
 ```
 
-With no argument, the app opens the first `.c3d` in its own folder, or prompts
-for one if there is none. Use an explicit path when several recordings exist.
+With no argument, the app opens a C3D from its folder or shows a file picker.
+Use **Open C3D...** to switch files. Rerun `setup_demo.bat` to repair installation.
 
-### Supported recordings
+## C3D requirements
 
-This is configured for the studio's **single-subject OptiTrack/Motive full-body
-marker layout**, with **Z up**. It is not a universal C3D skeleton importer.
-Marker labels must have a subject prefix, for example `Antonin_FullBody:ChestTop`.
-The prefix may change; the short marker names must match. Units may be m, cm, or mm.
-Unlabelled trajectories are ignored and multiple subjects are rejected.
-
-Required short names for all measurements and both models:
+Single-subject **OptiTrack/Motive full-body markers**, **Z up**, units m/cm/mm.
+Labels need a subject prefix, e.g. `Subject:ChestTop`, and these short names:
 
 ```text
 ChestTop BackTop HeadFront HeadLeft HeadRight HeadTop
@@ -51,65 +31,25 @@ LShoulderTop LElbowOut LWristIn LWristOut LHandIn LHandOut LHeel LKneeOut LToeTi
 RShoulderTop RElbowOut RWristIn RWristOut RHandIn RHandOut RHeel RKneeOut RToeTip
 ```
 
-Additional markers improve the drawn skeleton. Missing observations produce
-plot gaps or unavailable model scores. A different marker layout requires a
-mapping change in the Python adapters; renaming arbitrary joints is insufficient.
+Other marker layouts require adapter changes. Recordings are not included.
 
-## Controls and exports
+## Controls
 
-- Play/Pause: button or Space. Restart returns to the beginning.
-- Drag the timeline to seek. Choose a trailing **3-15 second** window.
-- Drag the 3D view to rotate. F11 toggles fullscreen; Escape exits it.
-- Models wait until a full selected window is available.
-- **Export** writes `measurements.csv`, `rolling_window.csv`,
-  `model_prediction.json`, `protective_prediction.json`, and `showcase.png`
-  into `outputs/`. Later exports overwrite those files.
+- **Space:** play/pause. **Timeline:** seek. **Window:** 3-15 seconds.
+- **Drag 3D view:** rotate. **F11:** fullscreen. **Escape:** exit fullscreen.
+- **Export:** saves CSV measurements, JSON model scores and a plot to `outputs/`, overwriting previous exports.
 
-Trunk lean is the pelvis-to-upper-trunk angle from vertical, not a direct
-explanation of the protective classifier. Model transfer to optical markers is
-approximate. See [MODEL_CARD.md](MODEL_CARD.md) and
-[PROTECTIVE_MODEL_CARD.md](PROTECTIVE_MODEL_CARD.md) for provenance and limits.
+Scores wait for a full window and animate toward each prediction. Exports contain
+raw scores. Model mapping is approximate: [emotion details](MODEL_CARD.md) / [protective details](PROTECTIVE_MODEL_CARD.md).
 
-## Manual setup / run
+## Share as ZIP
 
-From PowerShell in the extracted folder:
-
-```powershell
-py -3.13 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m pip install -r requirements-model.txt
-.\.venv\Scripts\python.exe setup_model.py
-.\.venv\Scripts\python.exe setup_protective_model.py
-.\.venv\Scripts\python.exe demo.py "C:\Recordings\My recording.c3d"
-```
-
-Activation of the virtual environment is unnecessary. If `py` is not recognized,
-repair the Python installation and enable its launcher. If dependencies are
-missing, rerun setup. A model checksum error requires rerunning its setup script.
-
-## Create a shareable ZIP
+After setup:
 
 ```powershell
 py -3.13 package_demo.py
 ```
 
-Creates `dist/Pose_stress.zip`, including runtime code, setup/launch scripts,
-requirements, model checkpoints, model cards, and third-party licenses.
-It excludes `.venv`, research downloads, outputs, caches, and recordings.
-To deliberately bundle the studio sample too:
-
-```powershell
-py -3.13 package_demo.py --include-sample
-```
-
-Recipients install Python and follow the ZIP instructions above. Do not copy
-`.venv` between computers. Keep `models/` and `vendor/` beside `demo.py`.
-
-## Developer checks
-
-The tests use the original studio sample C3D in the repository root (not included
-in the default distribution ZIP):
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
+Creates `dist/Pose_stress.zip` with code, weights and licenses; excludes recordings,
+local dependencies and generated files. Add `--include-sample` to include root C3D files.
+Recipients follow the setup steps above.
