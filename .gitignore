@@ -1,0 +1,20 @@
+.venv/
+# Python bytecode and local caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+# Generated exports and shareable bundles
+outputs/
+dist/
+# Downloaded research repositories, datasets and archives (unused at runtime)
+external/
+# Weights are downloaded and verified by the setup scripts
+models/*.pt
+models/*.hdf5
+# Local motion recordings and machine-specific secrets
+*.c3d
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

@@ -1,0 +1,4 @@
+ezc3d==1.7.2
+numpy==2.5.4
+matplotlib==3.11.2
+h5py==3.16.0
