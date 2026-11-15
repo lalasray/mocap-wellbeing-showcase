@@ -50,7 +50,7 @@ Other marker layouts require adapter changes. Recordings are not included.
 - **Export:** saves CSV measurements, JSON model scores and a plot to `outputs/`, overwriting previous exports.
 
 Scores wait for a full window and animate toward each prediction. Exports contain
-raw scores. Model mapping is approximate: [emotion details](MODEL_CARD.md) / [protective details](PROTECTIVE_MODEL_CARD.md).
+raw scores. Marker-to-model mapping is approximate; scores are not validated health assessments.
 
 ## Update
 

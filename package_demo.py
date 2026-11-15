@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 FILES = ['demo.py','motion.py','emotion_model.py','protective_model.py',
          'setup_model.py','setup_protective_model.py','setup_demo.bat','launch_demo.bat',
          'package_demo.py','requirements.txt','requirements-model.txt','README.md',
-         'MODEL_CARD.md','PROTECTIVE_MODEL_CARD.md','models/model_info.json',
+         'models/model_info.json',
          'models/stgcn_500_5.pt','models/HOT_bi_cnn_banet_coordinate.hdf5',
          'vendor/taew_stgcn/st_gcn.py','vendor/taew_stgcn/stgcn_graph.py',
          'vendor/taew_stgcn/tgcn.py','vendor/taew_stgcn/LICENSE','vendor/emopain_fusion/LICENSE']
