@@ -5,10 +5,20 @@ emotion/protective-movement scores. Runs locally with a 3-15 second rolling wind
 
 ## Setup and run
 
-1. Install [Python 3.13, 64-bit](https://www.python.org/downloads/windows/) with pip, Tcl/Tk and the Python launcher.
-2. Clone this repo or download and **extract** the ZIP.
-3. Run `setup_demo.bat` once. Internet is required for dependencies and missing model weights.
-4. Run `launch_demo.bat`, then choose your C3D. Playback works offline after setup.
+Install [Python 3.13, 64-bit](https://www.python.org/downloads/windows/) with pip,
+Tcl/Tk and the Python launcher, plus [Git for Windows](https://git-scm.com/download/win).
+
+In PowerShell:
+
+```powershell
+git clone https://github.com/lalasray/mocap-wellbeing-showcase.git
+cd mocap-wellbeing-showcase
+.\setup_demo.bat
+.\launch_demo.bat
+```
+
+Setup requires internet for dependencies and model weights. Run it once;
+subsequent launches work offline. Choose your C3D when the file picker opens.
 
 You can also drag a C3D onto the launcher or run:
 
@@ -42,14 +52,12 @@ Other marker layouts require adapter changes. Recordings are not included.
 Scores wait for a full window and animate toward each prediction. Exports contain
 raw scores. Model mapping is approximate: [emotion details](MODEL_CARD.md) / [protective details](PROTECTIVE_MODEL_CARD.md).
 
-## Share as ZIP
+## Update
 
-After setup:
+Close the app, then run from the repository folder:
 
 ```powershell
-py -3.13 package_demo.py
+git pull
+.\setup_demo.bat
+.\launch_demo.bat
 ```
-
-Creates `dist/Pose_stress.zip` with code, weights and licenses; excludes recordings,
-local dependencies and generated files. Add `--include-sample` to include root C3D files.
-Recipients follow the setup steps above.
