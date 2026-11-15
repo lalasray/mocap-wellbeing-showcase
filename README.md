@@ -3,6 +3,17 @@
 Windows desktop demo: C3D playback, gait speed, trunk lean, and pretrained
 emotion/protective-movement scores. Runs locally with a 3-15 second rolling window.
 
+![Demo showing motion playback, gait and trunk plots, and model scores](docs/demo-screenshot.png)
+
+| Area | What it shows |
+|---|---|
+| Top cards | Mean walking speed, wrist motion relative to the pelvis, and left/right arm movement range over the selected window. |
+| Left | 3D body markers at the current playback time. Drag to rotate. |
+| Centre charts | Gait speed (m/s) and trunk lean from upright (degrees) over time. |
+| Right: Gait expression | Happy, Sad, Angry and Neutral model scores. These independent scores need not sum to 1. |
+| Right: Protective movement | Non-protective and Protective model scores. |
+| Bottom | Rolling-window length, playback timeline, time counter and export controls. |
+
 ## Setup and run
 
 Install [Python 3.13, 64-bit](https://www.python.org/downloads/windows/) with pip,
@@ -43,7 +54,12 @@ RShoulderTop RElbowOut RWristIn RWristOut RHandIn RHandOut RHeel RKneeOut RToeTi
 
 Other marker layouts require adapter changes. Recordings are not included.
 
-## Controls
+## Use the demo
+
+1. Click **Open C3D...** (top right) and select a compatible recording.
+2. Click **Play**. Watch the body, measurements and model scores update together.
+3. Set **Rolling window** to 3-15 seconds. At 20 seconds, a 5-second window covers 15-20 seconds.
+4. Pause and drag the timeline to inspect a moment. Click **Export** to save the current results.
 
 - **Space:** play/pause. **Timeline:** seek. **Window:** 3-15 seconds.
 - **Drag 3D view:** rotate. **F11:** fullscreen. **Escape:** exit fullscreen.
